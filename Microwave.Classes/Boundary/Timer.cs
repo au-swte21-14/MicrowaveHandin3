@@ -27,6 +27,15 @@ namespace Microwave.Classes.Boundary
             TimeRemaining = time;
             timer.Enabled = true;
         }
+        
+        public void Set(int time)
+        {
+            if (time <= 0)
+            {
+                TimeRemaining = 0;
+            }
+            TimeRemaining = time;
+        }
 
         public void Stop()
         {

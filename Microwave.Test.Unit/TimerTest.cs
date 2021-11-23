@@ -147,5 +147,56 @@ namespace Microwave.Test.Unit
 
             Assert.That(uut.TimeRemaining, Is.EqualTo(5-ticks*1));
         }
+        
+        [Test]
+        public void Start_TimerExpires_ShortEnough_IncrementWhileRunning()
+        {
+            ManualResetEvent pause = new ManualResetEvent(false);
+
+            uut.Expired += (sender, args) => pause.Set();
+            uut.Start(2);
+            
+            // Wait some time before incrementing
+            Assert.That(!pause.WaitOne(1000));
+            uut.Set(uut.TimeRemaining + 1);
+
+            // Wait for original wait time
+            Assert.That(!pause.WaitOne(1100));
+            // wait for expiration, but not much longer, should come
+            Assert.That(pause.WaitOne(1100));
+        }
+        
+        [Test]
+        public void Start_TimerExpires_ShortEnough_DecrementWhileRunning()
+        {
+            ManualResetEvent pause = new ManualResetEvent(false);
+
+            uut.Expired += (sender, args) => pause.Set();
+            uut.Start(3);
+            
+            // Wait some time before decrementing
+            Assert.That(!pause.WaitOne(1000));
+            uut.Set(uut.TimeRemaining - 1);
+            // Validate that it hasn't timed out yet
+            Assert.That(!pause.WaitOne(100));
+
+            // wait for expiration, but not much longer, should come
+            Assert.That(pause.WaitOne(1000));
+        }
+        
+        [Test]
+        public void Start_TimerExpires_ShortEnough_DecrementToExpirationWhileRunning()
+        {
+            ManualResetEvent pause = new ManualResetEvent(false);
+
+            uut.Expired += (sender, args) => pause.Set();
+            uut.Start(2);
+            
+            // Wait some time before incrementing
+            Assert.That(!pause.WaitOne(1000));
+            uut.Set(uut.TimeRemaining - 2);
+            // Validate that it has timed out
+            Assert.That(pause.WaitOne(100));
+        }
     }
 }
