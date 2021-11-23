@@ -2,6 +2,7 @@
 using Microwave.Classes.Controllers;
 using Microwave.Classes.Interfaces;
 using NSubstitute;
+using NSubstitute.Extensions;
 using NUnit.Framework;
 
 namespace Microwave.Test.Unit
@@ -83,5 +84,11 @@ namespace Microwave.Test.Unit
             powerTube.Received().TurnOff();
         }
 
+        [Test]
+        public void Cooking_PowerTubeMaxPower()
+        {
+            powerTube.Configure().MaxPower.Returns(600);
+            Assert.AreEqual(600, uut.MaxPower);
+        }
     }
 }

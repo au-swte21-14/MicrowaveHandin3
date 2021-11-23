@@ -14,6 +14,8 @@ namespace Microwave.Classes.Controllers
         private IDisplay myDisplay;
         private IPowerTube myPowerTube;
         private ITimer myTimer;
+        
+        public int MaxPower => myPowerTube.MaxPower;
 
         public CookController(
             ITimer timer,
