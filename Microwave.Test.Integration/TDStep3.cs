@@ -247,6 +247,13 @@ namespace Microwave.Test.Integration
 
             // End of cooking is indicated by ligth being turned off
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("Light is turned off")));
+            
+            Thread.Sleep(3000);
+            // End of cooking is indicated by 3 beeps and BuzzerTurnOff
+            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("BEEP 1")));
+            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("BEEP 2")));
+            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("BEEP 3")));
+            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("Buzzer is turned off")));
 
         }
 
