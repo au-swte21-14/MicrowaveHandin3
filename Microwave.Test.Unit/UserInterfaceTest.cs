@@ -178,6 +178,16 @@ namespace Microwave.Test.Unit
 
             display.Received(1).ShowTime(Arg.Is<int>(1), Arg.Is<int>(0));
         }
+        
+        [Test]
+        public void SetPower_DecrementTimeButton_TimeIs1()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            display.Received(1).ShowTime(Arg.Is(1), Arg.Is(0));
+        }
 
         [Test]
         public void SetPower_2TimeButton_TimeIs2()
@@ -188,6 +198,30 @@ namespace Microwave.Test.Unit
             timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
             display.Received(1).ShowTime(Arg.Is<int>(2), Arg.Is<int>(0));
+        }
+        
+        [Test]
+        public void SetPower_2DecrementTimeButton_TimeIs0()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            display.Received(1).ShowTime(Arg.Is(0), Arg.Is(0));
+        }
+        
+        [Test]
+        public void SetPower_3DecrementTime()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            
+            // Display time has been set twice, because we incremented past it and decremented back
+            display.Received(2).ShowTime(Arg.Is(1), Arg.Is(0));
         }
 
         [Test]
