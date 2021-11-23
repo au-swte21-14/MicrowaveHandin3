@@ -71,5 +71,15 @@ namespace Microwave.Classes.Controllers
                 myDisplay.ShowTime(remaining / 60, remaining % 60);
             }
         }
+
+        public void ChangeTime(int time)
+        {
+            myTimer.Set(time);
+        }
+
+        public void OffsetTime(int timeOffset)
+        {
+            myTimer.Set(myTimer.TimeRemaining + timeOffset);
+        }
     }
 }
