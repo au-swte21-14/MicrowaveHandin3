@@ -111,6 +111,46 @@ namespace Microwave.Test.Integration
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("00:59")));
         }
 
+        [Test]
+        public void CookController_Timer_ChangeIncrement()
+        {
+            cooker.StartCooking(50, 1);
+            cooker.OffsetTime(1);
+
+            Thread.Sleep(1100);  // Wait a little more than 1 second
+            // Shouldn't have received it yet
+            ui.DidNotReceive().CookingIsDone();
+            
+            Thread.Sleep(1000);  // Wait 1 more second
+            
+            // Should have it received by now
+            ui.Received(1).CookingIsDone();
+        }
+        
+        [Test]
+        public void CookController_Timer_ChangeDecrement()
+        {
+            cooker.StartCooking(50, 5);
+            cooker.OffsetTime(-3);
+
+            // Shouldn't have received it yet
+            ui.DidNotReceive().CookingIsDone();
+            Thread.Sleep(2100);  // Wait a little more than 2 seconds
+
+            // Should have it received by now
+            ui.Received(1).CookingIsDone();
+        }
+        
+        
+        [Test]
+        public void CookController_Timer_ChangeDecrementToZero()
+        {
+            cooker.StartCooking(50, 5);
+            cooker.OffsetTime(-5);
+
+            // Should have it received by now
+            ui.Received(1).CookingIsDone();
+        }
 
         #endregion
     }
