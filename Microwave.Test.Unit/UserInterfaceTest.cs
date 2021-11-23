@@ -157,6 +157,18 @@ namespace Microwave.Test.Unit
 
             display.Received(1).ShowTime(Arg.Is(1), Arg.Is(0));
         }
+        
+        [Test]
+        public void SetPower_DecrementTimeButtonPastZero()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            display.DidNotReceive().ShowTime(Arg.Is(0), Arg.Is(0));
+        }
 
         [Test]
         public void SetPower_2TimeButton_TimeIs2()
