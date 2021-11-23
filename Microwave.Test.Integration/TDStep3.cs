@@ -232,6 +232,53 @@ namespace Microwave.Test.Integration
 
             output.DidNotReceive().OutputLine(Arg.Is<string>(str => str.Contains("00:")));
         }
+        
+        [Test]
+        public void CookController_Timer_ChangeIncrement()
+        {
+            // Starting up with 50 W and 1 minute
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+            
+            // Increment time
+            timeButton.Press();
+            Thread.Sleep(1050); // Wait for tick
+            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("01:59")));
+        }
+        
+        [Test]
+        public void CookController_Timer_ChangeDecrement()
+        {
+            // Starting up with 50 W and 2 minutes
+            powerButton.Press();
+            timeButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+            
+            // Decrement time
+            decrementTimeButton.Press();
+            
+            Thread.Sleep(1050); // Wait for tick
+            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("00:59")));
+        }
+        
+        
+        [Test]
+        public void CookController_Timer_ChangeDecrementToZero()
+        {
+            // Starting up with 50 W and 1 minutes
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+            
+            // Decrement time
+            decrementTimeButton.Press();
+            
+            Thread.Sleep(1050); // Wait for tick
+            
+            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("Light is turned off")));
+        }
 
         #endregion
 
