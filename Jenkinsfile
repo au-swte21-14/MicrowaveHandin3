@@ -5,7 +5,7 @@ node('master'){
     
     stage('Fetch from Git'){
         // Correct branch name, if different from 'main' - it can typically be 'master' instead 
-        git branch: '${env.BRANCH_NAME}', url:'https://github.com/au-swte21-14/MicrowaveHandin3.git'
+        git branch: '${BRANCH_NAME}', url:'https://github.com/au-swte21-14/MicrowaveHandin3.git'
     }
     
     stage('Clean Build') {
