@@ -1,8 +1,4 @@
 node('master'){
-    stage('Clean Workspace'){
-        cleanWs()
-    }
-    
     stage('Clean Build') {
         bat '"C:\\Program Files\\dotnet\\dotnet.exe" clean MicrowaveOven.sln'
     }
