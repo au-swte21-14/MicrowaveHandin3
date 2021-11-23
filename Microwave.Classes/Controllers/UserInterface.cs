@@ -80,6 +80,9 @@ namespace Microwave.Classes.Controllers
                     time += 1;
                     myDisplay.ShowTime(time, 0);
                     break;
+                case States.COOKING:
+                    myCooker.OffsetTime(60);
+                    break;
             }
         }
 
@@ -99,6 +102,9 @@ namespace Microwave.Classes.Controllers
                     }
 
                     myDisplay.ShowTime(time, 0);
+                    break;
+                case States.COOKING:
+                    myCooker.OffsetTime(-60);
                     break;
             }
         }

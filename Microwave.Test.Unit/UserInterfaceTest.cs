@@ -372,7 +372,29 @@ namespace Microwave.Test.Unit
             light.Received(1).TurnOff();
         }
 
+        [Test]
+        public void Ready_FullPower_CookerTimeIncremented()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Started, increment time
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
+            cooker.Received(1).OffsetTime(60);
+        }
+        
+        [Test]
+        public void Ready_FullPower_CookerTimeDecremented()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Started, decrement time
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).OffsetTime(-60);
+        }
     }
 
 }
