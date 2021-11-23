@@ -213,17 +213,6 @@ namespace Microwave.Test.Unit
         }
         
         [Test]
-        public void SetPower_2DecrementTimeButton_TimeIs0()
-        {
-            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-            // Now in SetPower
-            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-
-            display.Received(1).ShowTime(Arg.Is(0), Arg.Is(0));
-        }
-        
-        [Test]
         public void SetPower_3DecrementTime()
         {
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
