@@ -8,7 +8,11 @@ namespace Microwave.Classes.Controllers
     {
         private enum States
         {
-            READY, SETPOWER, SETTIME, COOKING, DOOROPEN
+            READY,
+            SETPOWER,
+            SETTIME,
+            COOKING,
+            DOOROPEN
         }
 
         private States myState = States.READY;
@@ -62,7 +66,7 @@ namespace Microwave.Classes.Controllers
                     myState = States.SETPOWER;
                     break;
                 case States.SETPOWER:
-                    powerLevel = (powerLevel >= myCooker.MaxPower ? 50 : powerLevel+50);
+                    powerLevel = (powerLevel >= myCooker.MaxPower ? 50 : powerLevel + 50);
                     myDisplay.ShowPower(powerLevel);
                     break;
             }
@@ -82,7 +86,7 @@ namespace Microwave.Classes.Controllers
                     break;
             }
         }
-        
+
         public void OnDecrementTimePressed(object sender, EventArgs e)
         {
             switch (myState)
@@ -93,6 +97,11 @@ namespace Microwave.Classes.Controllers
                     break;
                 case States.SETTIME:
                     time -= 1;
+                    if (time < 1)
+                    {
+                        time = 1;
+                    }
+
                     myDisplay.ShowTime(time, 0);
                     break;
             }
@@ -109,7 +118,7 @@ namespace Microwave.Classes.Controllers
                     break;
                 case States.SETTIME:
                     myLight.TurnOn();
-                    myCooker.StartCooking(powerLevel, time*60);
+                    myCooker.StartCooking(powerLevel, time * 60);
                     myState = States.COOKING;
                     break;
                 case States.COOKING:
