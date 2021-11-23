@@ -2,6 +2,7 @@
 using Microwave.Classes.Controllers;
 using Microwave.Classes.Interfaces;
 using NSubstitute;
+using NSubstitute.Extensions;
 using NUnit.Framework;
 
 namespace Microwave.Test.Unit
@@ -75,6 +76,7 @@ namespace Microwave.Test.Unit
         [Test]
         public void Ready_2PowerButton_PowerIs100()
         {
+            cooker.Configure().MaxPower.Returns(700);
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             display.Received(1).ShowPower(Arg.Is<int>(100));
@@ -83,17 +85,43 @@ namespace Microwave.Test.Unit
         [Test]
         public void Ready_14PowerButton_PowerIs700()
         {
+            cooker.Configure().MaxPower.Returns(700);
             for (int i = 1; i <= 14; i++)
             {
                 powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             }
             display.Received(1).ShowPower(Arg.Is<int>(700));
         }
+        
+        [Test]
+        public void Ready_20PowerButton_PowerIs1000_1000W()
+        {
+            cooker.Configure().MaxPower.Returns(1000);
+            for (int i = 1; i <= 20; i++)
+            {
+                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+            display.Received(1).ShowPower(Arg.Is<int>(1000));
+        }
 
         [Test]
         public void Ready_15PowerButton_PowerIs50Again()
         {
+            cooker.Configure().MaxPower.Returns(700);
             for (int i = 1; i <= 15; i++)
+            {
+                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+            // And then once more
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            display.Received(2).ShowPower(50);
+        }
+        
+        [Test]
+        public void Ready_21PowerButton_PowerIs50Again_1000W()
+        {
+            cooker.Configure().MaxPower.Returns(1000);
+            for (int i = 1; i <= 21; i++)
             {
                 powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             }
@@ -196,6 +224,7 @@ namespace Microwave.Test.Unit
         [Test]
         public void Ready_PowerAndTime_CookerIsCalledCorrectly()
         {
+            cooker.Configure().MaxPower.Returns(700);
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             // Now in SetPower
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
@@ -213,6 +242,7 @@ namespace Microwave.Test.Unit
         [Test]
         public void Ready_FullPower_CookerIsCalledCorrectly()
         {
+            cooker.Configure().MaxPower.Returns(700);
             for (int i = 50; i <= 700; i += 50)
             {
                 powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
