@@ -33,6 +33,7 @@ namespace Microwave.Classes.Boundary
             if (time <= 0)
             {
                 TimeRemaining = 0;
+                Expire();
             }
             TimeRemaining = time;
         }

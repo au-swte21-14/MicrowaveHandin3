@@ -196,7 +196,7 @@ namespace Microwave.Test.Unit
             Assert.That(!pause.WaitOne(1000));
             uut.Set(uut.TimeRemaining - 2);
             // Validate that it has timed out
-            Assert.That(pause.WaitOne(100));
+            Assert.That(pause.WaitOne(0));
         }
     }
 }
