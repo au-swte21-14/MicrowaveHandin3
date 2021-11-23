@@ -74,6 +74,13 @@ namespace Microwave.Test.Integration
             display.Received(1).ShowTime(1, 0);
         }
 
+        [Test]
+        public void DecrementTimeButton_UI_TimePressed()
+        {
+            powerButton.Press();
+            decrementTimeButton.Press();
 
+            display.Received(1).ShowTime(1, 0);
+        }
     }
 }
