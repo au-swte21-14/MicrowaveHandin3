@@ -79,6 +79,18 @@ namespace Microwave.Test.Integration
             // Should now show time 01:00
             output.Received().OutputLine(Arg.Is<string>(str => str.Contains("01:00")));
         }
+        
+        [Test]
+        public void Button_UserInterface_DecrementTimeButtonPressed()
+        {
+            powerButton.Press();
+            timeButton.Press();
+            timeButton.Press();
+            decrementTimeButton.Press();
+
+            // Should now show time 01:00
+            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("01:00")));
+        }
 
         [Test]
         public void Button_UserInterface_StartCancelButtonPressed()
