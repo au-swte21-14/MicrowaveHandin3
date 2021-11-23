@@ -14,6 +14,7 @@ namespace Microwave.Test.Unit
 
         private IButton powerButton;
         private IButton timeButton;
+        private IButton decrementTimeButton;
         private IButton startCancelButton;
 
         private IDoor door;
@@ -30,6 +31,7 @@ namespace Microwave.Test.Unit
         {
             powerButton = Substitute.For<IButton>();
             timeButton = Substitute.For<IButton>();
+            decrementTimeButton = Substitute.For<IButton>();
             startCancelButton = Substitute.For<IButton>();
             door = Substitute.For<IDoor>();
             light = Substitute.For<ILight>();
@@ -38,7 +40,7 @@ namespace Microwave.Test.Unit
             buzzer = Substitute.For<IBuzzer>();
 
             uut = new UserInterface(
-                powerButton, timeButton, startCancelButton,
+                powerButton, timeButton, decrementTimeButton, startCancelButton,
                 door,
                 display,
                 light,
