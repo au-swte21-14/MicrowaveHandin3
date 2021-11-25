@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+actor User as a
+participant TimeButton as inc
+participant DecrementTimeButton as dec
+participant UserInterface as ui
+participant CookController as cook
+participant Timer as timer
+
+hnote over ui
+    Cooking
+end hnote
+
+== Increment ==
+
+a -> inc: Press Time Button
+activate inc
+inc -> ui: <<event>> OnTimePressed()
+deactivate inc
+activate ui
+ui -> cook: OffsetTime(60)
+deactivate ui
+activate cook
+cook -> timer: Set(TimeRemaining + 60)
+deactivate cook
+
+== Decrement ==
+
+a -> dec: Press Decrement Time Button
+activate dec
+dec -> ui: <<event>> OnDecrementTimePressed()
+deactivate dec
+activate ui
+ui -> cook: OffsetTime(-60)
+deactivate ui
+activate cook
+cook -> timer: Set(TimeRemaining - 60)
+deactivate cook
+alt Time <= 0
+activate timer
+timer -> timer: Expire()
+timer -> cook: <<event>> OnTimerExpired()
+deactivate timer
+
+end alt
+
+@enduml
