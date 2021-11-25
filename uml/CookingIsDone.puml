@@ -1,0 +1,37 @@
+﻿@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+participant UserInterface
+participant Display
+participant Light
+participant Buzzer
+participant CookController
+participant Timer
+participant PowerTube
+participant Output
+
+
+activate CookController
+UserInterface <- CookController : CookingIsDone()
+deactivate CookController
+activate UserInterface
+UserInterface -> Display : clear()
+activate Display
+Display -> Output : LogLine()
+deactivate Display
+UserInterface -> Light : TurnOff()
+activate Light
+Light -> Output : LogLine()
+deactivate Light
+UserInterface -> Buzzer : TurnOnBuzzer()
+activate Buzzer
+Buzzer -> Output : LogLine()
+deactivate Buzzer
+UserInterface -> Buzzer : TurnOffBuzzer()
+deactivate UserInterface
+activate Buzzer
+Buzzer -> Output : LogLine()
+deactivate Buzzer
+
+@enduml
