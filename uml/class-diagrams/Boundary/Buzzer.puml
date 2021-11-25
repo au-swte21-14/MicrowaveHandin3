@@ -1,0 +1,11 @@
+@startuml
+class Buzzer {
+    - myOutput : IOutput
+    - isOn : bool = false
+    + Buzzer(output:IOutput)
+    + TurnOnBuzzer() : void
+    + TurnOffBuzzer() : void
+}
+IBuzzer <|.. Buzzer
+Buzzer o-- IOutput
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+interface IUserInterface {
+    OnPowerPressed(sender:object, e:EventArgs) : void
+    OnTimePressed(sender:object, e:EventArgs) : void
+    OnDecrementTimePressed(sender:object, e:EventArgs) : void
+    OnStartCancelPressed(sender:object, e:EventArgs) : void
+    OnDoorOpened(sender:object, e:EventArgs) : void
+    OnDoorClosed(sender:object, e:EventArgs) : void
+    CookingIsDone() : void
+}
+@enduml

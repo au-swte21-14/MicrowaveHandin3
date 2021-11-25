@@ -1,0 +1,9 @@
+@startuml
+class Door {
+    +  <<event>> Opened : EventHandler 
+    +  <<event>> Closed : EventHandler 
+    + Close() : void
+    + Open() : void
+}
+IDoor <|.. Door
+@enduml

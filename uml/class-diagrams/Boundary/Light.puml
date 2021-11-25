@@ -1,0 +1,11 @@
+@startuml
+class Light {
+    - myOutput : IOutput
+    - isOn : bool = false
+    + Light(output:IOutput)
+    + TurnOn() : void
+    + TurnOff() : void
+}
+ILight <|.. Light
+Light o-- IOutput
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+interface IOutput {
+    OutputLine(line:string) : void
+}
+@enduml

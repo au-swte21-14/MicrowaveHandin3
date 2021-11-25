@@ -1,0 +1,22 @@
+@startuml
+!include ./Controllers/UserInterface.puml
+!include ./Controllers/CookController.puml
+!include ./Boundary/Buzzer.puml
+!include ./Boundary/Button.puml
+!include ./Boundary/Timer.puml
+!include ./Boundary/Output.puml
+!include ./Boundary/PowerTube.puml
+!include ./Boundary/Door.puml
+!include ./Boundary/Light.puml
+!include ./Boundary/Display.puml
+!include ./Interfaces/ILight.puml
+!include ./Interfaces/IButton.puml
+!include ./Interfaces/IPowerTube.puml
+!include ./Interfaces/IBuzzer.puml
+!include ./Interfaces/IDisplay.puml
+!include ./Interfaces/IDoor.puml
+!include ./Interfaces/IOutput.puml
+!include ./Interfaces/IUserInterface.puml
+!include ./Interfaces/ITimer.puml
+!include ./Interfaces/ICookController.puml
+@enduml

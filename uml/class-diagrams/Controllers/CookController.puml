@@ -1,0 +1,23 @@
+@startuml
+class CookController {
+    + UI : IUserInterface <<set>>
+    - isCooking : bool = false
+    - myDisplay : IDisplay
+    - myPowerTube : IPowerTube
+    - myTimer : ITimer
+    + MaxPower : int <<get>>
+    + CookController(timer:ITimer, display:IDisplay, powerTube:IPowerTube, ui:IUserInterface)
+    + CookController(timer:ITimer, display:IDisplay, powerTube:IPowerTube)
+    + StartCooking(power:int, time:int) : void
+    + Stop() : void
+    + OnTimerExpired(sender:object, e:EventArgs) : void
+    + OnTimerTick(sender:object, e:EventArgs) : void
+    + ChangeTime(time:int) : void
+    + OffsetTime(timeOffset:int) : void
+}
+ICookController <|.. CookController
+CookController o-- IUserInterface
+CookController o-- IDisplay
+CookController o-- IPowerTube
+CookController o-- ITimer
+@enduml

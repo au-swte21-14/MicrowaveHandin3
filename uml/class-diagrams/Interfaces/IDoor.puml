@@ -1,0 +1,8 @@
+@startuml
+interface IDoor {
+     <<event>> Opened : EventHandler 
+     <<event>> Closed : EventHandler 
+    Open() : void
+    Close() : void
+}
+@enduml

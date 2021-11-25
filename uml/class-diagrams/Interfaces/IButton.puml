@@ -1,0 +1,6 @@
+@startuml
+interface IButton {
+     <<event>> Pressed : EventHandler 
+    Press() : void
+}
+@enduml

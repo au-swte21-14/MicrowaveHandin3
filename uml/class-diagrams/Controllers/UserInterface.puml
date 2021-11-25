@@ -1,0 +1,35 @@
+@startuml
+class UserInterface {
+    - myState : States
+    - myCooker : ICookController
+    - myLight : ILight
+    - myDisplay : IDisplay
+    - _buzzer : IBuzzer
+    - powerLevel : int = 50
+    - time : int = 1
+    + UserInterface(powerButton:IButton, timeButton:IButton, decrementTimeButton:IButton, startCancelButton:IButton, door:IDoor, display:IDisplay, light:ILight, cooker:ICookController, buzzer:IBuzzer)
+    - ResetValues() : void
+    + OnPowerPressed(sender:object, e:EventArgs) : void
+    + OnTimePressed(sender:object, e:EventArgs) : void
+    + OnDecrementTimePressed(sender:object, e:EventArgs) : void
+    + OnStartCancelPressed(sender:object, e:EventArgs) : void
+    + OnDoorOpened(sender:object, e:EventArgs) : void
+    + OnDoorClosed(sender:object, e:EventArgs) : void
+    + CookingIsDone() : void
+}
+enum States {
+    READY,
+    SETPOWER,
+    SETTIME,
+    COOKING,
+    DOOROPEN,
+}
+IUserInterface <|.. UserInterface
+UserInterface +-- States
+UserInterface o-- ICookController
+UserInterface o-- ILight
+UserInterface o-- IDisplay
+UserInterface o-- IBuzzer
+UserInterface ..> IButton
+UserInterface ..> IDoor
+@enduml

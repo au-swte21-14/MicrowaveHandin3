@@ -1,0 +1,6 @@
+@startuml
+interface ILight {
+    TurnOn() : void
+    TurnOff() : void
+}
+@enduml

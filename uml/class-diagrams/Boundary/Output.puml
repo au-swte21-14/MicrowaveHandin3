@@ -1,0 +1,6 @@
+@startuml
+class Output {
+    + OutputLine(line:string) : void
+}
+IOutput <|.. Output
+@enduml

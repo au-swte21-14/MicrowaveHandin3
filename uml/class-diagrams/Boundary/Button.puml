@@ -1,0 +1,7 @@
+@startuml
+class Button {
+    +  <<event>> Pressed : EventHandler 
+    + Press() : void
+}
+IButton <|.. Button
+@enduml

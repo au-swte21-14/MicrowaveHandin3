@@ -1,0 +1,12 @@
+@startuml
+class PowerTube {
+    - myOutput : IOutput
+    - IsOn : bool = false
+    + MaxPower : int <<get>>
+    + PowerTube(output:IOutput, maxPower:int)
+    + TurnOn(power:int) : void
+    + TurnOff() : void
+}
+IPowerTube <|.. PowerTube
+PowerTube o-- IOutput
+@enduml

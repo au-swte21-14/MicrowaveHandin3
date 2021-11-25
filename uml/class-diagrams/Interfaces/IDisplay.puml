@@ -1,0 +1,7 @@
+@startuml
+interface IDisplay {
+    ShowTime(minutes:int, seconds:int) : void
+    ShowPower(power:int) : void
+    Clear() : void
+}
+@enduml

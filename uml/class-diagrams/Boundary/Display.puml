@@ -1,0 +1,11 @@
+@startuml
+class Display {
+    - myOutput : IOutput
+    + Display(output:IOutput)
+    + ShowTime(min:int, sec:int) : void
+    + ShowPower(power:int) : void
+    + Clear() : void
+}
+IDisplay <|.. Display
+Display o-- IOutput
+@enduml

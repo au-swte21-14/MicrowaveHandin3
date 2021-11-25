@@ -1,0 +1,7 @@
+@startuml
+interface IPowerTube {
+    TurnOn(power:int) : void
+    TurnOff() : void
+    MaxPower : int <<get>>
+}
+@enduml

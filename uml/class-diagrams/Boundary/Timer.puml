@@ -1,0 +1,15 @@
+@startuml
+class Timer {
+    + TimeRemaining : int <<get>>
+    +  <<event>> Expired : EventHandler 
+    +  <<event>> TimerTick : EventHandler 
+    - timer : System.Timers.Timer
+    + Timer()
+    + Start(time:int) : void
+    + Set(time:int) : void
+    + Stop() : void
+    - Expire() : void
+    - OnTimerEvent(sender:object, args:System.Timers.ElapsedEventArgs) : void
+}
+ITimer <|.. Timer
+@enduml

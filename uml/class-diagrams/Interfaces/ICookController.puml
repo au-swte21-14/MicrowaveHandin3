@@ -1,0 +1,9 @@
+@startuml
+interface ICookController {
+    StartCooking(power:int, time:int) : void
+    ChangeTime(time:int) : void
+    OffsetTime(timeOffset:int) : void
+    Stop() : void
+    MaxPower : int <<get>>
+}
+@enduml
