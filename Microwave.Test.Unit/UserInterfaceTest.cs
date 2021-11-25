@@ -14,6 +14,7 @@ namespace Microwave.Test.Unit
 
         private IButton powerButton;
         private IButton timeButton;
+        private IButton decrementTimeButton;
         private IButton startCancelButton;
 
         private IDoor door;
@@ -30,6 +31,7 @@ namespace Microwave.Test.Unit
         {
             powerButton = Substitute.For<IButton>();
             timeButton = Substitute.For<IButton>();
+            decrementTimeButton = Substitute.For<IButton>();
             startCancelButton = Substitute.For<IButton>();
             door = Substitute.For<IDoor>();
             light = Substitute.For<ILight>();
@@ -38,7 +40,7 @@ namespace Microwave.Test.Unit
             buzzer = Substitute.For<IBuzzer>();
 
             uut = new UserInterface(
-                powerButton, timeButton, startCancelButton,
+                powerButton, timeButton, decrementTimeButton, startCancelButton,
                 door,
                 display,
                 light,
@@ -176,6 +178,28 @@ namespace Microwave.Test.Unit
 
             display.Received(1).ShowTime(Arg.Is<int>(1), Arg.Is<int>(0));
         }
+        
+        [Test]
+        public void SetPower_DecrementTimeButton_TimeIs1()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            display.Received(1).ShowTime(Arg.Is(1), Arg.Is(0));
+        }
+        
+        [Test]
+        public void SetPower_DecrementTimeButtonPastZero()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            display.DidNotReceive().ShowTime(Arg.Is(0), Arg.Is(0));
+        }
 
         [Test]
         public void SetPower_2TimeButton_TimeIs2()
@@ -186,6 +210,19 @@ namespace Microwave.Test.Unit
             timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
             display.Received(1).ShowTime(Arg.Is<int>(2), Arg.Is<int>(0));
+        }
+        
+        [Test]
+        public void SetPower_3DecrementTime()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            
+            // Display time has been set twice, because we incremented past it and decremented back
+            display.Received(2).ShowTime(Arg.Is(1), Arg.Is(0));
         }
 
         [Test]
@@ -368,7 +405,29 @@ namespace Microwave.Test.Unit
             light.Received(1).TurnOff();
         }
 
+        [Test]
+        public void Ready_FullPower_CookerTimeIncremented()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Started, increment time
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
+            cooker.Received(1).OffsetTime(60);
+        }
+        
+        [Test]
+        public void Ready_FullPower_CookerTimeDecremented()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Started, decrement time
+            decrementTimeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).OffsetTime(-60);
+        }
     }
 
 }

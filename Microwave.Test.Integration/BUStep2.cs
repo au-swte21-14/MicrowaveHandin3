@@ -24,6 +24,7 @@ namespace Microwave.Test.Integration
 
         private IButton powerButton;
         private IButton timeButton;
+        private IButton decrementTimeButton;
         private IButton startCancelButton;
 
         private IDoor door;
@@ -37,6 +38,7 @@ namespace Microwave.Test.Integration
 
             powerButton = Substitute.For<IButton>();
             timeButton = Substitute.For<IButton>();
+            decrementTimeButton = Substitute.For<IButton>();
             startCancelButton = Substitute.For<IButton>();
 
             door = Substitute.For<IDoor>();
@@ -53,7 +55,7 @@ namespace Microwave.Test.Integration
 
 
             ui = new UserInterface(
-                powerButton, timeButton, startCancelButton,
+                powerButton, timeButton, decrementTimeButton, startCancelButton,
                 door, 
                 display, light, cooker, buzzer);
 
@@ -98,6 +100,16 @@ namespace Microwave.Test.Integration
         {
             powerButton.Pressed += Raise.Event();
             timeButton.Pressed += Raise.Event();
+
+            // Should now show time 01:00
+            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("01:00")));
+        }
+        
+        [Test]
+        public void UserInterface_Display_ShowTimeWithDecrement()
+        {
+            powerButton.Pressed += Raise.Event();
+            decrementTimeButton.Pressed += Raise.Event();
 
             // Should now show time 01:00
             output.Received().OutputLine(Arg.Is<string>(str => str.Contains("01:00")));
@@ -178,6 +190,24 @@ namespace Microwave.Test.Integration
             powerButton.Pressed += Raise.Event();
             timeButton.Pressed += Raise.Event();
             timeButton.Pressed += Raise.Event();
+            startCancelButton.Pressed += Raise.Event();
+
+            // Should start cooking 
+            // Wait for first time tick
+            Thread.Sleep(1050);
+
+            // Now should have updated 
+            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("01:59")));
+        }
+        
+        [Test]
+        public void UserInterface_CookController_StartCooking_2minDecremented()
+        {
+            powerButton.Pressed += Raise.Event();
+            timeButton.Pressed += Raise.Event();
+            timeButton.Pressed += Raise.Event();
+            timeButton.Pressed += Raise.Event();
+            decrementTimeButton.Pressed += Raise.Event();
             startCancelButton.Pressed += Raise.Event();
 
             // Should start cooking 
